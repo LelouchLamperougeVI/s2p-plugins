@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: s2p-plugins
+Version: 0.1
+Summary: A set of plugins for suite2p used at the McNaughton Lab
+Home-page: https://github.com/LelouchLamperougeVI/s2p-plugins
+Author: HaoRan Chang
+Author-email: haoran.chang@mail.mcgill.ca
+License: UNKNOWN
+Description: # s2p-plugins
+        Useful plugins for suite2p at the McNaugthon Lab (Lethbridge)
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown

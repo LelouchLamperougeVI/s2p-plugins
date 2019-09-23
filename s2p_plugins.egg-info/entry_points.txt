@@ -1,0 +1,3 @@
+[suite2p.plugin]
+smooth_dff = smooth_dff.smooth_dff:smooth_dff
+
