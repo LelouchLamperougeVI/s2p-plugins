@@ -18,6 +18,7 @@ from . import gui
 from scipy.signal import medfilt
 from scipy.ndimage import gaussian_filter1d as gaussfilt
 import numpy as np
+from suite2p.gui.traces import plot_trace
 
 modes = gui.window.modes.keys()
 types = gui.window.smooth_types.keys()
@@ -32,6 +33,10 @@ class smooth_dff:
     def trigger(self):
         self.gui.show()
 
+    def dff(self, F, neu): # naive dF/F estimation
+        base = np.mean(neu)
+        return (F - neu) / base * 1e3
+
     def smooth(self, signal):
         if self.gui.type == 'median':
             return medfilt(signal, (1, round(self.gui.sigma) + round(self.gui.sigma + 1) % 2))
@@ -42,14 +47,12 @@ class smooth_dff:
 
     def activate(self):
         self.original_Fcell = self.parent.Fcell
-        self.original_Fneu = self.parent.Fneu
-        self.original_Spks = self.parent.Spks
-
-        self.parent.Fcell = self.smooth(self.parent.Fcell)
-        self.parent.Fneu = self.smooth(self.parent.Fneu)
-        self.parent.Spks = self.smooth(self.parent.Spks)
+        if self.gui.mode != 'smooth':
+            self.parent.Fcell = self.dff(self.parent.Fcell, self.parent.Fneu)
+        if self.gui.mode != 'dF/F':
+            self.parent.Fcell = self.smooth(self.parent.Fcell)
+        self.parent.update_plot()
 
     def deactivate(self):
         self.parent.Fcell = self.original_Fcell
-        self.parent.Fneu = self.original_Fneu
-        self.parent.Spks = self.original_Spks
+        self.parent.update_plot()

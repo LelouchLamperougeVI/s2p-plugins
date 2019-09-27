@@ -9,8 +9,8 @@ class window(QWidget):
     modes = {'smooth + dF/F': 0,
             'smooth': 1,
             'dF/F': 2}
-    smooth_types = {'median': 'win = ',
-                    'Gaussian': 'sigma = ',
+    smooth_types = {'Gaussian': 'sigma = ',
+                    'median': 'win = ',
                     'mean': 'win = '}
     dial_sstep = 1
     dial_pstep = 10 # this is also the multiplication factor
@@ -80,6 +80,12 @@ class window(QWidget):
         win.returnPressed.connect(lambda: sig_disp.setText(window.smooth_types[types_list.currentText()] + str(self.set_sigma(float(Fs.text()) * float(win.text())))) if Fs.text() not in window.fs_ph else False)
         dial.valueChanged[int].connect(lambda value: sig_disp.setText(window.smooth_types[types_list.currentText()] + str(self.set_sigma(value/10.0))))
         dial.valueChanged[int].connect(lambda value: win.setText(str( dial.value() / window.dial_pstep / float(Fs.text()) )) if Fs.text() not in window.fs_ph else False)
+
+        modes_list.currentTextChanged.connect(lambda: on_button.setChecked(False))
+        types_list.currentTextChanged.connect(lambda: on_button.setChecked(False))
+        Fs.returnPressed.connect(lambda: on_button.setChecked(False))
+        win.returnPressed.connect(lambda: on_button.setChecked(False))
+        dial.valueChanged.connect(lambda: on_button.setChecked(False))
 
     def flip_colour(self, obj):
         obj.setStyleSheet('color: ' + window.black) if window.red in obj.styleSheet() else obj.setStyleSheet('color: ' + window.red)
