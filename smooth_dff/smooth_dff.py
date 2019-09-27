@@ -43,7 +43,9 @@ class smooth_dff:
         elif self.gui.type == 'Gaussian':
             return gaussfilt(signal, self.gui.sigma)
         else:
-            return np.convolve(signal, np.ones(round(self.gui.sigma))/round(self.gui.sigma), mode='same')
+            kernel = np.ones(round(self.gui.sigma)).flatten() / round(self.gui.sigma)
+            convolution = lambda x: np.convolve(x, kernel, mod='same')
+            return np.apply_along_axis(convolution, axis=1, arr=signal)
 
     def activate(self):
         self.original_Fcell = self.parent.Fcell
