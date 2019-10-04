@@ -22,6 +22,7 @@ setup(
     entry_points={
         'suite2p.plugin': [
             'smooth_dff = smooth_dff.smooth_dff:smooth_dff',
+            'adjFonts = adjFonts.adjFonts:adjFonts',
         ],
     }
 )
